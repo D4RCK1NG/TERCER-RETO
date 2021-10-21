@@ -34,5 +34,42 @@ public class MotorbikeService {
             }
         }
     }
+public Motorbike update(Motorbike motorbike){
+        if(motorbike.getId()!=null){
+            Optional<Motorbike> paux=motorbikeRepository.getMotorbike(motorbike.getId());
+            if(paux.isEmpty()){
+                if(motorbike.getName()!=null){
+                    paux.get().setName(motorbike.getName());
+                }
+                if(motorbike.getBrand()!=null){
+                    paux.get().setBrand(motorbike.getBrand());
+                }
+                if(motorbike.getYear()!=null){
+                    paux.get().setYear(motorbike.getYear());
+                }
+                if(motorbike.getDescription()!=null){
+                    paux.get().setDescription(motorbike.getDescription());
+                }
+                if(motorbike.getCategory()!=null){
+                    paux.get().setCategory(motorbike.getCategory());
+                }
+                motorbikeRepository.save(paux.get());
+                return paux.get();
+            }else{
+                return motorbike;
+            }
+        }else{
+            return motorbike;
+        }
+    }
 
+
+    public boolean deleteMotorbike(int motorbikeId) {
+        Boolean aBoolean = getMotorbike(motorbikeId).map(motorbike -> {
+            motorbikeRepository.delete(motorbike);
+            return true;
+        }).orElse(false);
+        return aBoolean;
+    }
+    
 }

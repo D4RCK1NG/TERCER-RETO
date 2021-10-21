@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.usa.ciclo3.ciclo3.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,10 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-/**
- *
- * @author 57314
- */
+
 @Entity
 @Table(name = "reservation")
 
@@ -34,7 +26,7 @@ public class Reservation implements Serializable {
     private String status = "created";
 
     @ManyToOne
-    @JoinColumn(name = "Id")
+    @JoinColumn(name = "motorbikeId")
     @JsonIgnoreProperties("reservation")
 
     private Motorbike motorbike;

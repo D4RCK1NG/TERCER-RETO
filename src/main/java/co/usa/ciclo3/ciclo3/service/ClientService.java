@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.usa.ciclo3.ciclo3.service;
 
 import co.usa.ciclo3.ciclo3.model.Client;
@@ -12,10 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author 57314
- */
 @Service
 public class ClientService {
 
@@ -31,7 +22,7 @@ public class ClientService {
     }
 
     public Client save(Client client) {
-        if (client.getIdClient()== null) {
+        if (client.getIdClient() == null) {
             return clientRepository.save(client);
         } else {
             Optional<Client> ser = clientRepository.getClient(client.getIdClient());
@@ -41,5 +32,36 @@ public class ClientService {
                 return client;
             }
         }
+    }
+
+    public Client update(Client client) {
+        if (client.getIdClient() != null) {
+            Optional<Client> e = clientRepository.getClient(client.getIdClient());
+            if (!e.isEmpty()) {
+                if (client.getName() != null) {
+                    e.get().setName(client.getName());
+                }
+                if (client.getAge() != null) {
+                    e.get().setAge(client.getAge());
+                }
+                if (client.getPassword() != null) {
+                    e.get().setPassword(client.getPassword());
+                }
+                clientRepository.save(e.get());
+                return e.get();
+            } else {
+                return client;
+            }
+        } else {
+            return client;
+        }
+    }
+
+    public boolean deleteClient(int clientId) {
+        Boolean aBoolean = getClient(clientId).map(client -> {
+            clientRepository.delete(client);
+            return true;
+        }).orElse(false);
+        return aBoolean;
     }
 }
