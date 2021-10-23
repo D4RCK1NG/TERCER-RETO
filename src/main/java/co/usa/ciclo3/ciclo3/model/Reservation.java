@@ -27,15 +27,25 @@ public class Reservation implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "motorbikeId")
-    @JsonIgnoreProperties("reservation")
+    @JsonIgnoreProperties("reservations")
 
     private Motorbike motorbike;
 
     @ManyToOne
     @JoinColumn(name = "clientId")
-    @JsonIgnoreProperties({"reservation", "message"})
+    @JsonIgnoreProperties({"reservations", "messages"})
 
     private Client client;
+    
+    private String score;
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
 
     public Integer getIdReservation() {
         return idReservation;
