@@ -30,7 +30,7 @@ public class Motorbike implements Serializable {
     private List<Message> messages;
 
     @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "motorbike")
-    @JsonIgnoreProperties({"motorbike","messages"})
+    @JsonIgnoreProperties({"motorbike","client"})
     public List<Reservation> reservations;
 
     public Integer getId() {
