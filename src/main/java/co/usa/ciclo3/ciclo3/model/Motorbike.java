@@ -6,33 +6,52 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-
+/* 
+@author JOSE DAVID AMAYA
+ */
 @Entity
-@Table(name="motorbike")
+/*
+nombre tabla motorbike
+ */
+@Table(name = "motorbike")
 public class Motorbike implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /*
+    creacion de variables y/o valores de tabla motorbike
+     */
     private Integer id;
     private String name;
     private String brand;
     private Integer year;
     private String description;
-
-
+    /*
+    relacion  tabla category 
+     */
     @ManyToOne
-    @JoinColumn(name="categoryid")
+    @JoinColumn(name = "categoryid")
     @JsonIgnoreProperties("motorbikes")
     private Category category;
-    
+
+    /*
+    relacion  tablas message
+    */
     @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "motorbike")
-    @JsonIgnoreProperties({"motorbike","client"})
+    @JsonIgnoreProperties({"motorbike", "client"})
     private List<Message> messages;
+    
+    /*
+    relacion tabla reservation
+    */
 
     @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "motorbike")
-    @JsonIgnoreProperties({"motorbike","client"})
+    @JsonIgnoreProperties({"motorbike", "client"})
     public List<Reservation> reservations;
 
+    /* 
+    se generan getters y setters
+     */
     public Integer getId() {
         return id;
     }
@@ -96,7 +115,5 @@ public class Motorbike implements Serializable {
     public void setReservations(List<Reservation> reservations) {
         this.reservations = reservations;
     }
-
-
 
 }
