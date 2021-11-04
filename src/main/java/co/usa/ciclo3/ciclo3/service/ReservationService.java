@@ -13,20 +13,41 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ *
+ * @author jose david amaya
+ */
 @Service
 public class ReservationService {
 
+    /**
+     * creación de variable de tipo Repositorio con la anotación
+     */
     @Autowired
     private ReservationRepository reservationRepository;
-
+    
+/**
+     * metodo para obtener todos los datos de la tabla reservaciones
+     * @return List de clase Reservacion
+     */
     public List<Reservation> getAll() {
         return reservationRepository.getAll();
     }
 
+    /**
+     * metodo para obtener dato de la tabla reservaciones por Id
+     * @param reservationId
+     * @return Optional de clase Reservacion
+     */
     public Optional<Reservation> getReservation(int reservationId) {
         return reservationRepository.getReservation(reservationId);
     }
 
+    /**
+     * metodo para registrar valores en la tabla reservaciones
+     * @param reservation
+     * @return valor de calse Reservacion
+     */
     public Reservation save(Reservation reservation) {
         if (reservation.getIdReservation() == null) {
             return reservationRepository.save(reservation);
@@ -40,6 +61,11 @@ public class ReservationService {
         }
     }
 
+     /**
+     * metodo para actualizar un dato de la tabla Reservaciones
+     * @param reservation
+     * @return valor de calse Reservacion
+     */
     public Reservation update(Reservation reservation) {
         if (reservation.getIdReservation() != null) {
             Optional<Reservation> e = reservationRepository.getReservation(reservation.getIdReservation());
@@ -64,6 +90,11 @@ public class ReservationService {
         }
     }
 
+     /**
+     * metodo para borrar un dato de la tabla Reservaciones por Id
+     * @param reservationId
+     * @return boolean
+     */
     public boolean deleteReservation(int reservationId) {
         Boolean aBoolean = getReservation(reservationId).map(reservation -> {
             reservationRepository.delete(reservation);
@@ -72,6 +103,10 @@ public class ReservationService {
         return aBoolean;
     }
 
+     /**
+     * Metodo para adquirir status
+     * @return StatusReservaciones
+     */
     public StatusReservations getReportStatusReservations() {
 
         List<Reservation> completed = reservationRepository.StatusReservations("completed");
@@ -79,6 +114,12 @@ public class ReservationService {
         return new StatusReservations(completed.size(), cancelled.size());
     }
 
+    /**
+     * Metodo para el reporte de tiempo
+     * @param datoA
+     * @param datoB
+     * @return ListaReservaciones
+     */
     public List<Reservation> getReportsTimeReservations(String datoA, String datoB) {
         SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
         Date datoUno = new Date();
@@ -97,6 +138,10 @@ public class ReservationService {
         }
     }
 
+     /**
+     * metodo para reporte de clientes
+     * @return listaClientes
+     */
     public List<ContClients> serviceTopClientses() {
         return reservationRepository.getTopClientses();
     }
